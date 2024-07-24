@@ -1,0 +1,46 @@
+import requests
+import json
+
+URL = "https://optimus.fulcrumhq.build/api/TokenAuth/Authenticate"
+
+# AUTH_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjIxODIiLCJBc3BOZXQuSWRlbnRpdHkuU2VjdXJpdHlTdGFtcCI6IlpRVFJNRDJGTzM2UEdPMlJVSjdURVJVUUNSNUxXNVpZIiwiaHR0cDovL3d3dy5hc3BuZXRib2lsZXJwbGF0ZS5jb20vaWRlbnRpdHkvY2xhaW1zL3RlbmFudElkIjoiMTAwOCIsInN1YiI6IjIxODIiLCJqdGkiOiIyN2RkYTZjNC1mMTExLTRjYjktYjZhMy01ZjRlMzc2MWZiMDkiLCJpYXQiOjE3MDkyODA5MjksInRva2VuX3ZhbGlkaXR5X2tleSI6IjlkZjkyMDA3LWFlZmMtNGU3Yi04NTFhLTk1MDJiMjhkZmZiMCIsInVzZXJfaWRlbnRpZmllciI6IjIxODJAMTAwOCIsInRva2VuX3R5cGUiOiIwIiwibmJmIjoxNzA5MjgwOTI5LCJleHAiOjE3MDkyODQ1MjksImlzcyI6Ikx0RmllbGQiLCJhdWQiOiJMdEZpZWxkIn0.nYshDLkBGxd7mGi5gcaEiSGnZ9WtTeI9F1gyiQS702o', 'encryptedAccessToken': 'wNYmO41/48SHNstaLVXxHCCre29BZQl1NhC6NM3R3rzpXtPQxVzH6jEzA/QhXFN5tu6Fk7pO53uppm1mVXMZgxbyRVz26dnepi/FyB6axBY+6gq1GL+uRQgoiFUCjRN2p8w6LevViwKlHyWZZJZO1DGVSjAi1m2U+og9pkHw9/ToeRMrRuVPUqz6v89W5tSk1eIqKk7rFa1QE7EebMqqUA+NV181q+bUWVuTdToTmvvfcqBvL29egUiauJmuQA2o9yqDysSwziYF8VFFlR9/7UfbdwxcNwZCxG72xCAfQTkUKakZzwLCvch5QyGfxr8fqtBIUg6hF+MMRbYWU3YltUkqi9uSCP65ewggxWATDdJPSGDVKMGIS7WN2O73k0EM/MTka4xLjicuU874XPMqI1DmkBSYu/ap7+D59rMJ+zeGGtBeqhzDuX6WvQJQDHN3I2NRHrVPengV8Tc9FNcr0lDtusyxWMdWtwk0HCHZl+rvnNfydeIClsJhRoFvvBdlvEful/Jttsf3+cXSbYRs0hy3Mn8uvLH+fkWtHFTRuksFcMaBeSRfbygW8bq2ThF8j0MxDA7Oe81T37QIb+Ze5ZfbWs4KHzAwt+DYujr2et60JcOC7zVMofAEeagoiHgtZpX3hcTMNKYY0lkiI2YyUQ19ivYXzPbI4k+ujSUOmPl7S+YHXg6VBhYhMjXZXrZNHgi3edUx4YoZyA+ALUW+Ng6b+piEWyYUVZWtOgpNbKi0Jpr97CDR6qagCK3e7gy/A0XF3TnQw9C2Bl9xH6dBwv3w1ijkZy/WRQVc1/+t9DmtEKsoO8uLqs67QeBXD/B+Sm0NatmTp8mfBdVUUXUbbb9xXPntaJ2/5xEMmWbyEv9zpUt3WezHCIT/zBBwTCwCa/PvvFk9dKs86LpeQXHOVeaN91Oref6nBGnEHwI+mLQ="
+# QAS Token
+# AUTH_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjQ4IiwiQXNwTmV0LklkZW50aXR5LlNlY3VyaXR5U3RhbXAiOiI1SUdNQVhMU001NUNTUEY2VjJLRVRDTVA1MkVFRVg1UiIsImh0dHA6Ly93d3cuYXNwbmV0Ym9pbGVycGxhdGUuY29tL2lkZW50aXR5L2NsYWltcy90ZW5hbnRJZCI6IjEwMDgiLCJzdWIiOiI0OCIsImp0aSI6IjU2NWM3ZGIzLTllNTktNDExNC04ZTNhLWEyMmQ3MmVlZDkwMyIsImlhdCI6MTcxMzc2OTMzNCwidG9rZW5fdmFsaWRpdHlfa2V5IjoiOTAxODgzMDYtY2RhNS00M2YyLWIwMzQtMTZkZDA2YThiZDA3IiwidXNlcl9pZGVudGlmaWVyIjoiNDhAMTAwOCIsInRva2VuX3R5cGUiOiIwIiwibmJmIjoxNzEzNzY5MzM0LCJleHAiOjE3MTM3NzI5MzQsImlzcyI6Ikx0RmllbGQiLCJhdWQiOiJMdEZpZWxkIn0.uNycnyyzM-ct7QyIC5yAg05NhKX1fk8J3lO-DlA9RTE; AWSALB=Tv3JqK/jDZRFKu7iflt6UDdaCHKjjQGVLnjU8sDsQSdZ1RRuZ07Zkqecjnpr0VypzuvG8eNx7CW0QuiJCy/vuIwewRrnGgd0joTJ55jqWFItELA1DfGOYpV5YDCl; AWSALBCORS=Tv3JqK/jDZRFKu7iflt6UDdaCHKjjQGVLnjU8sDsQSdZ1RRuZ07Zkqecjnpr0VypzuvG8eNx7CW0QuiJCy/vuIwewRrnGgd0joTJ55jqWFItELA1DfGOYpV5YDCl"
+# PROD Token - get from cookies
+AUTH_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjkyNyIsIkFzcE5ldC5JZGVudGl0eS5TZWN1cml0eVN0YW1wIjoiTU5DWEdDNkk1NERDMjJYRzVUVUlYWU9IUk9MSDNLUEciLCJodHRwOi8vd3d3LmFzcG5ldGJvaWxlcnBsYXRlLmNvbS9pZGVudGl0eS9jbGFpbXMvdGVuYW50SWQiOiIxMDA3Iiwic3ViIjoiOTI3IiwianRpIjoiZDA5YWQxNTAtODI1YS00M2NlLWJhYWMtMWQxMzgwZGM0M2MzIiwiaWF0IjoxNzEzODM3NTMyLCJ0b2tlbl92YWxpZGl0eV9rZXkiOiIyMjg5ZDQ4OC05ZTgxLTRkMTMtOTFlNS1mNzAyM2YwOGFkN2EiLCJ1c2VyX2lkZW50aWZpZXIiOiI5MjdAMTAwNyIsInRva2VuX3R5cGUiOiIwIiwibmJmIjoxNzEzODM3NTMyLCJleHAiOjE3MTM4NDExMzIsImlzcyI6Ikx0RmllbGQiLCJhdWQiOiJMdEZpZWxkIn0.H3JQC4OqF8m5Nk2K_DQwwQUwYUeDVv2U_UwfwYyFIA4"
+
+def set_user_agent(choice):
+    useragents = [
+        "PostmanRuntime/7.36.3",
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3",
+    ]
+    return useragents[choice]
+
+headers = {
+    "User-Agent": set_user_agent(choice=1),
+}
+
+payload = {
+    "userNameOrEmailAddress": "SVC_FORMS",
+    # QAS
+    # "password": "8KA9qMcRM97r",
+    # "password": "m8rsRLb11K4T",
+    # PROD
+    'password': "hLd4OdH29UIF",
+    "rememberClient": False,
+    "twoFactorRememberClientToken": None,
+    "singleSignIn": False,
+    "returnUrl": None,
+}
+
+response = requests.request("POST", URL, headers=headers, json=payload)
+
+if response.status_code == 200:
+    try:
+        print(response.json())
+    except ValueError:
+        print("Unable to decode JSON response")
+else:
+    print("Unable to get response with Code:", response.status_code)
+    print(response.json())
+
