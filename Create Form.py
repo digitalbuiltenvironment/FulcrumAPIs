@@ -4,7 +4,7 @@ import json
 CREATE_EDIT_ISSUE_URL = "https://optimus.fulcrumhq.build/api/services/app/Issues/CreateOrEdit"
 IS_SIGNEDIN_URL = "https://optimus.fulcrumhq.build/api/tokenauth/IsSignedIn"
 # need to copy everytime you elevate permissions
-AUTH_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjMyNDMiLCJBc3BOZXQuSWRlbnRpdHkuU2VjdXJpdHlTdGFtcCI6IkJEMzRXMkgyQTRDTldRRURZVDRCT0hSQ1BOSE1QTE1BIiwiaHR0cDovL3d3dy5hc3BuZXRib2lsZXJwbGF0ZS5jb20vaWRlbnRpdHkvY2xhaW1zL3RlbmFudElkIjoiMTAwNyIsInN1YiI6IjMyNDMiLCJqdGkiOiIzMTMwN2QwNi05NjQ1LTQzMjEtOGY1Mi1hNjFkZDJiYjc5OGMiLCJpYXQiOjE3MjE3ODkxOTAsInRva2VuX3ZhbGlkaXR5X2tleSI6ImUxNjNmMmVmLTM3NWUtNDA3MC1hMDczLWU4NmE3N2JkYmI2MSIsInVzZXJfaWRlbnRpZmllciI6IjMyNDNAMTAwNyIsInRva2VuX3R5cGUiOiIwIiwiYWJpbGl0aWVzIjpbIkdyYW50QWxsT3VzIiwiR3JhbnRBbGxSb2xlcyJdLCJuYmYiOjE3MjE3ODkxOTAsImV4cCI6MTcyMTc5Mjc5MCwiaXNzIjoiTHRGaWVsZCIsImF1ZCI6Ikx0RmllbGQifQ.moHFuSJeNZESHAVqfglgbY89ynXG9uQYtCH45Z_eliI"
+AUTH_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjMyNDMiLCJBc3BOZXQuSWRlbnRpdHkuU2VjdXJpdHlTdGFtcCI6IkJEMzRXMkgyQTRDTldRRURZVDRCT0hSQ1BOSE1QTE1BIiwiaHR0cDovL3d3dy5hc3BuZXRib2lsZXJwbGF0ZS5jb20vaWRlbnRpdHkvY2xhaW1zL3RlbmFudElkIjoiMTAwNyIsInN1YiI6IjMyNDMiLCJqdGkiOiJkN2E2YzgxNS0zYzk1LTQ0NTYtOTA3Yy01YzQyZTg4YjczOTkiLCJpYXQiOjE3MjE5NjAwMjYsInRva2VuX3ZhbGlkaXR5X2tleSI6IjM5OWEyNTFmLTIxNmUtNGY1ZC05YzM5LTUwYWZjMTg5MWFhZSIsInVzZXJfaWRlbnRpZmllciI6IjMyNDNAMTAwNyIsInRva2VuX3R5cGUiOiIwIiwiYWJpbGl0aWVzIjpbIkdyYW50QWxsT3VzIiwiR3JhbnRBbGxSb2xlcyJdLCJuYmYiOjE3MjE5NjAwMjYsImV4cCI6MTcyMTk2MzYyNiwiaXNzIjoiTHRGaWVsZCIsImF1ZCI6Ikx0RmllbGQifQ.-F8fKaZC9Db4Ld72B_-5g1tSiQxAG1XkCIT_LqY5W1k"
 
 def create_or_edit_issue(url, headers, payload):
     response = requests.post(url, headers=headers, json=payload)
@@ -20,7 +20,7 @@ headers = {
 }
 
 # how many times you wanna create the form?
-n = 1
+n = 5
 
 for i in range(n):
 
@@ -54,7 +54,7 @@ for i in range(n):
         payload = {
         'issueDefinitionId': "349", # change according to project
         'extensionData': "{\"sectionbreak_5FA6C46E-0960-4719-AF94-7CAAFF378ACF\":{\"shouldCompleteForm\":false,\"status\":\"2\"},\"dropdown_D8FF867E-57E9-4D68-9755-92E9D528F38A\":\"1\",\"text_input_3B7F4EDB-1D02-42E0-8D7C-C86B97B685C2\":\"Build Only\",\"date_picker_17FEE9BA-676D-4733-8435-3FE2591333E1\":\"2021-07-31T16:00:00.000Z\",\"number_input_E0B2F44C-50E9-464C-9605-E7D0CD974E7E\":31861.85,\"number_input_C02FD559-1DE2-4C6B-BEF8-E014B7B9B475\":1}",
-        'organizationUnitId': '45', # change according to project
+        'organizationUnitId': '45', # change according to project #same at Lt-Ou
         'sequenceType': 0,
         }
 
