@@ -2,7 +2,7 @@ import requests
 from dotenv import load_dotenv, set_key
 import os
 
-def elevate_token():
+def get_token():
     load_dotenv(override=True)
 
     # Base url currently points to PROD, can be changed
@@ -38,7 +38,7 @@ def elevate_token():
     if response.status_code != 200:
         raise Exception(response.json()["error"]["message"])
     
-    print("Elevate Token successful")
+    print("Token successful obtained")
     
     # Directly parse the JSON response
     response_json = response.json()
@@ -53,4 +53,4 @@ def elevate_token():
 
 # For testing purposes
 if __name__ == "__main__":
-    elevate_token()
+    get_token()
